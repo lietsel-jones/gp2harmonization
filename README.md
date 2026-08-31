@@ -1,6 +1,6 @@
-# Cohort processing pipeline — notebook + scripts
+# Cohort processing pipeline: notebook + scripts
 
-The notebook (`Template_script_refactored.ipynb`) now imports its logic
+The notebook (`Template_script_refactored.ipynb`) imports its logic
 from a local `code/` package instead of defining functions inline.
 This makes each piece independently testable/reusable and keeps the
 notebook focused on the run-specific bits (which sheet, which cohort,
@@ -34,9 +34,9 @@ if not os.path.isdir(REPO_DIR):
 os.chdir(REPO_DIR)
 ```
 
-Fill in `REPO_URL`/`REPO_DIR` once you've pushed this to GitHub. The next
+Fill in `REPO_URL`/`REPO_DIR`. The next
 cell then adds the (now current) working directory to `sys.path` so
-`from code.sheets_io import ...` etc. resolve — it points at the repo
+`from code.sheets_io import ...` etc. resolve. It points at the repo
 root, not at `code/` itself, since `code/` needs to be importable as
 a package (it has an `__init__.py`).
 
@@ -64,24 +64,3 @@ notebook from the repo root.
 - **Manifest + run-log** (was cell 32) →
   `code/manifest.py::build_manifest()`, `save_manifest()`,
   `log_run_to_sheet()`.
-
-## One bug fix along the way
-
-The original manifest cell referenced an `output_path` variable that was
-never defined anywhere in the notebook (it would have crashed with a
-`NameError`). A new cell was added right after the `today = ...` cell that
-actually writes the merged dataframe out:
-
-```python
-output_path = f'{cohort}_{today}.csv'
-x.to_csv(output_path, index=False)
-```
-
-## Testing
-
-Each function in `code/` takes plain arguments (dataframes, dicts,
-strings) and returns plain values — no notebook globals or Colab-specific
-calls except `get_pygsheets_client()`. That means you can write normal
-`pytest` tests against `process_coding_sheet`, `merge_keylist_groups`,
-and `lint_coding_sheet` with small synthetic coding sheets + CSVs, without
-touching Google Sheets or Drive at all.
