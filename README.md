@@ -1,6 +1,6 @@
 # Cohort processing pipeline: notebook + scripts
 
-The notebook (`Template_script_refactored.ipynb`) imports its logic
+The notebook (`STUDYNAME_processing.ipynb`) imports its logic
 from a local `code/` package instead of defining functions inline.
 This makes each piece independently testable/reusable and keeps the
 notebook focused on the run-specific bits (which sheet, which cohort,
