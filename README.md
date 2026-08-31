@@ -9,7 +9,7 @@ which files).
 ## Layout
 
 ```
-Template_script_refactored.ipynb
+STUDYNAME_processing.ipynb
 code/
     __init__.py
     sheets_io.py          get_pygsheets_client(), ReplaceSheet()
