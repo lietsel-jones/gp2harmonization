@@ -43,24 +43,3 @@ a package (it has an `__init__.py`).
 If you're not on Colab (running locally, or the repo is already mounted
 in Drive), skip/edit the clone cell and just make sure you're running the
 notebook from the repo root.
-
-## What moved where
-
-- **`ReplaceSheet`** (was cell 4) → `code/sheets_io.py`. Also added
-  `get_pygsheets_client()`, wrapping the Colab auth boilerplate that was
-  cell 3.
-- **`checkDup` / `checkNull` / `TakeOneEntry`** (was cell 15) →
-  `code/qc_utils.py`. `checkNull` takes an `id_col` parameter now
-  (defaults to `'fox_insight_id'` to match the original behavior) so it
-  isn't hardcoded to one cohort's ID column.
-- **`lint_coding_sheet`** (was cell 25) → `code/coding_sheet_lint.py`.
-- **The big per-file/per-item processing loop** (was cells 23 + 26, never
-  a function before) → `code/processing.py::process_coding_sheet(d, cleaning_list)`.
-  Returns `(a, processing_errors, d)`. `preCleaning`, `createKeyString`,
-  and a new `load_raw_file()` helper (the `.csv`/`.xlsx` reading + `daysB`
-  rounding logic) live in the same module.
-- **The KeyList merge step** (was cell 30, also never a function) →
-  `code/merge_keylists.py::merge_keylist_groups(a)`. Returns `(x, b)`.
-- **Manifest + run-log** (was cell 32) →
-  `code/manifest.py::build_manifest()`, `save_manifest()`,
-  `log_run_to_sheet()`.
